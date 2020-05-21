@@ -1,0 +1,22 @@
+# 1
+# python
+class Solution:
+    def numWays(self, n: int) -> int:
+        a, b = 1, 1
+        for _ in range(n):
+            a, b = b, (a+b)%1000000007
+        return a
+
+
+# 2
+// C
+int numWays(int n){
+    int a = 1, b = 1, c;
+    for (int i = 0; i < n; i++)
+    {
+        c = (a+b) % 1000000007;
+        a = b;
+        b = c;
+    }
+    return a;
+}

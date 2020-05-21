@@ -1,4 +1,14 @@
-// C 
+# 1
+# python 和 C2 一样的思路。
+class Solution:
+    def fib(self, n: int) -> int:
+        a, b = 0, 1
+        for _ in range(n):
+            a, b = b, a + b
+        return a % 1000000007
+
+# 2
+// C 1
 // 从第0位开始，数组的每一位都计算出来对应的斐波那契值，然后返回。
 int fib(int n){
     if(n<0) return -1;
@@ -14,19 +24,16 @@ int fib(int n){
         return dp[n];
     }
 
-// C
+# 3
+// C 2
 // 舍弃前面的所有已计算出来的数值，只保留需要的那一个，然后返回。
 int fib(int n){
-    if (n == 0) return 0;
-    if (n == 1) return 1;
-    if (n < 0) return -1;
-
-    int dp[3] = {0, 1, 1};
-    for (int i = 2; i < n; i++)
+    int a = 0, b = 1, c = 1;
+    for (int i = 0; i < n; i++)
     {
-        dp[0] = dp[1];
-        dp[1] = dp[2];
-        dp[2] = (dp[0] + dp[1]) % 1000000007;
+        a = b;
+        b = c;
+        c = (a + b)% 1000000007; // 求余放在return那里会导致int不够用
     }
-    return dp[2];
+    return a;
 }

@@ -1,0 +1,38 @@
+Krahets 题解：https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/solution/mian-shi-ti-11-xuan-zhuan-shu-zu-de-zui-xiao-shu-3/
+
+# 1 python
+# 直接排序，拿第一个。
+# 因为它跟“逐个比较，最小的存到变量a”是一样的，就不写后者了。
+# 时间复杂度 - O(n)
+# 空间复杂度 - 1
+class Solution:
+    def minArray(self, numbers: List[int]) -> int:
+        numbers.sort()
+        return numbers[0]
+
+# 2 python
+# 二分法，参考了Krahets的讲解。
+# 时间复杂度 - O(logn)
+# 空间复杂度 - 1
+
+class Solution:
+    def minArray(self, numbers: [int]) -> int:
+        i, j = 0, len(numbers) - 1
+        while i < j:
+            m = i + (j - i) // 2
+            if numbers[m] > numbers[j]: i = m + 1
+            elif numbers[m] < numbers[j]: j = m
+            else: j -= 1
+        return numbers[i]
+
+# 3 C
+int minArray(int* numbers, int numbersSize){
+    int l = 0, r = numbersSize - 1;
+    while (l < r) {
+        int mid = l + (r - l) / 2;
+        if (numbers[mid] > numbers[r]) l = mid + 1;
+        else if (numbers[mid] < numbers[r]) r = mid;
+        else r--;
+    }
+    return numbers[r];
+}
