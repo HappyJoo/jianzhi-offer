@@ -1,0 +1,25 @@
+# python
+# 时间复杂度 O(N)
+# 空间复杂度 O(1）
+class Solution:
+    def deleteNode(self, head: ListNode, val: int) -> ListNode:
+        if head.val == val: return head.next
+        pre, cur = head, head.next
+        while cur and cur.val != val:
+            pre, cur = cur, cur.next
+        if cur: pre.next = cur.next
+        return head
+
+
+# C
+struct ListNode* deleteNode(struct ListNode* head, int val){
+    struct ListNode *cur = head->next, *pre=head;
+    if (head->val == val) return head->next;
+    while (cur && cur->val != val)
+    {
+        pre = cur;
+        cur = cur->next;
+    }
+    if (cur) pre->next = cur->next;
+    return head;
+}

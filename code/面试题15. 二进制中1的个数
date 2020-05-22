@@ -1,0 +1,47 @@
+# Krahets 题解：https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof/solution/mian-shi-ti-15-er-jin-zhi-zhong-1de-ge-shu-wei-yun/
+
+#1 python 
+# 时间复杂度 - O(n)
+# 空间复杂度 - 1
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        a = bin(n)
+        b = 0
+        for i in a:
+            if i == '1': b+=1
+        return b
+
+
+#2 python 与运算 逐位判断
+时间复杂度 O(log_2 n)
+空间复杂度 O(1)： 
+
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        res = 0
+        while n:
+            res += n & 1
+            n >>= 1
+        return res
+
+
+#3 python 与运算 巧用 n & (n - 1)
+时间复杂度 O(M) ： n & (n - 1) 操作仅有减法和与运算，占用 O(1) ；设 M 为二进制数字 n 中 1 的个数，则需循环 M 次（每轮消去一个 1 ），占用 O(M)。
+空间复杂度 O(1) ： 变量 resres 使用常数大小额外空间。
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        res = 0
+        while n:
+            res += 1
+            n &= n - 1
+        return res
+
+# c 复杂度同上
+int hammingWeight(uint32_t n) {
+    int r = 0;
+    while (n != '\0'){
+        r++;
+        n &= n - 1;
+    }
+    return r;
+}

@@ -1,0 +1,43 @@
+# C
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+#define swap(a,b) {temp = a; a = b; b = temp;}
+int* exchange(int* nums, int numsSize, int* returnSize){
+    int s = 0,temp;
+    for (int i = 0; i < numsSize; i++)
+    {
+        if (nums[i] & 1 == 1) {
+            swap(nums[s], nums[i]);
+            s++;
+        }
+    }
+    *returnSize = numsSize;
+    return nums;
+}
+
+# C 首尾指针
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+#define swap(a,b) {int temp = a; a = b; b = temp;}
+
+int* exchange(int* nums, int numsSize, int* returnSize){
+    int l = 0, r = numsSize - 1;
+    while (l < r)
+    {
+        if ((nums[l] & 1) == 1) l++;
+        else if ((nums[r] & 1) == 0) r--;
+        else{
+            // 'l++' 和 'r--' 在这里不能放进方括号里面，可能是放进去之后运算顺序就改变了
+            // 这两句其实去掉也可以，因为上面两个if会包括了这两个。但是在这里加进去的话，可以减少运算的步骤。
+            // 例如加上的话，只有两条指令，如果留给上面的if的话，会多出while 和 ((nums[l] & 1) == 1) 这些指令，效率就会差一些。
+            // 那反正都是要算的，不如放在这里。
+            swap(nums[l], nums[r]); 
+            l++;
+            r--;
+        }
+    }
+    *returnSize = numsSize;
+    return nums;
+}
