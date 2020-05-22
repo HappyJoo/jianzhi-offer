@@ -1,0 +1,12 @@
+# python 哈希表
+# 时间复杂度 - O(n)
+# 空间复杂度 - O(n)
+
+class Solution:
+    def findRepeatNumber(self, nums: List[int]) -> int:
+        d = {}
+        for i in nums:
+            if i not in d:
+                d[i] = 0
+            else:
+                return i

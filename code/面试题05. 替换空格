@@ -1,0 +1,29 @@
+# python 有没有感受到python的便捷
+# 时间复杂度 - O(n) 从头到尾遍历一次，替换掉空格
+# 空间复杂度 - O(1) 没有额外的空间
+class Solution:
+    def replaceSpace(self, s: str) -> str:
+        return s.replace(' ', '%20')
+
+
+# C 上面一句，下面这么多句，还容易写错，快哭了
+char* replaceSpace(char* s){
+    int l = strlen(s), j = 0;
+    char *res = (char*)malloc((3*l + 1) * sizeof(char));
+    for (int i = 0; i < l; i++)
+    {
+        if (s[i] == ' ')
+        {
+            res[j++] = '%';
+            res[j++] = '2';
+            res[j++] = '0';
+        } else{
+            res[j++] = s[i];
+        }
+    }
+    res[j] = '\0';
+    return res;
+}
+
+
+

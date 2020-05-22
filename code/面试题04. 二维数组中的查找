@@ -1,0 +1,36 @@
+# C
+# 时间复杂度 - O(n)，最差是O(n),最好是O(1)
+# 空间复杂度 - O(1)
+
+bool findNumberIn2DArray(int** matrix, int matrixSize, int* matrixColSize, int target){
+    for(int i = 0; i < matrixSize; i++)
+    {
+        for (int j = 0; j < *matrixColSize; j++)
+        {
+            if (matrix[i][0] > target) return false;    
+            if (matrix[i][j] > target) break;      
+            if (matrix[i][j] == target) return true;
+        }
+    }
+    return false;
+}
+
+# python 这个和上面一样的思路，理论上会快一点点
+class Solution:
+    def findNumberIn2DArray(self, matrix: List[List[int]], target: int) -> bool:
+        if not matrix: return False
+        for i in matrix:
+            for j in i:
+                if j == target:
+                    return True
+                elif j > target:
+                    break
+        return False
+
+# python 这个比较短，但是很慢，因为遍历了全部n
+class Solution:
+    def findNumberIn2DArray(self, matrix: List[List[int]], target: int) -> bool:
+        if not matrix: return False
+        for i in matrix:
+            if target in i: return True
+        return False

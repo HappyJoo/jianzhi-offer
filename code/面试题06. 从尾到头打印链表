@@ -1,0 +1,22 @@
+# python
+# 时间复杂度 - O(n) 从头到尾遍历一次，替换掉空格
+# 空间复杂度 - O(1) 没有额外的空间
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+# 递归
+class Solution_1:
+    def reversePrint(self, head: ListNode) -> List[int]:
+        return self.reversePrint(head.next) + [head.val] if head else []
+
+# 数组
+class Solution:
+    def reversePrint(self, head: ListNode) -> List[int]:
+        stack = []
+        while head:
+            stack.append(head.val)
+            head = head.next
+        return stack[::-1]
