@@ -1,0 +1,36 @@
+# Python 递推
+# 参考：https://leetcode-cn.com/problems/er-cha-shu-de-jing-xiang-lcof/solution/mian-shi-ti-27-er-cha-shu-de-jing-xiang-di-gui-fu-/
+# 时间复杂度 O(N) 从头到尾走了一遍
+# 空间复杂度 O(1）只用到一个指针
+class Solution:
+    def mirrorTree(self, root: TreeNode) -> TreeNode:
+        if not root: return
+        root.left, root.right = self.mirrorTree(root.right), self.mirrorTree(root.left)
+        return root
+
+# C 递推
+struct TreeNode* mirrorTree(struct TreeNode* root){
+    if (!root) return false;
+
+    struct TreeNode *tmp;
+    tmp = root->right;
+    root->right = root->left;
+    root->left = tmp;
+
+    mirrorTree(root->right);
+    mirrorTree(root->left);
+    return root;
+}
+
+
+# python 辅助栈
+class Solution:
+    def mirrorTree(self, root: TreeNode) -> TreeNode:
+        if not root: return
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            if node.left: stack.append(node.left)
+            if node.right: stack.append(node.right)
+            node.left, node.right = node.right, node.left
+        return root
