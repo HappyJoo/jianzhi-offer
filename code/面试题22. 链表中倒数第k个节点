@@ -1,0 +1,31 @@
+# 先跑k个节点，然后head再跑剩下的节点，就是那个节点了
+# python
+# 时间复杂度 O(N) 从头到尾走了一遍
+# 空间复杂度 O(1）只用到一个指针
+class Solution:
+    def getKthFromEnd(self, head: ListNode, k: int) -> ListNode:
+        l = head
+        while k > 0:
+            l = l.next
+            k -= 1
+        while l:
+            head = head.next
+            l = l.next
+        return head
+
+# C
+struct ListNode* getKthFromEnd(struct ListNode* head, int k){
+    struct ListNode *cnt=head;
+    while(k>0)
+    {
+        cnt = cnt->next;
+        k--;
+    }
+    
+    while(cnt)
+    {
+        cnt = cnt->next;
+        head = head->next;
+    }
+    return head;
+}
