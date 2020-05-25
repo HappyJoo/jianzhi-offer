@@ -1,0 +1,46 @@
+# Python 递推
+# 参考：https://leetcode-cn.com/problems/dui-cheng-de-er-cha-shu-lcof/solution/mian-shi-ti-28-dui-cheng-de-er-cha-shu-di-gui-qing/
+# 时间复杂度 O(N) 最差是全部遍历一遍，最好是root节点的左右节点就不一样
+# 空间复杂度 O(1）
+
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        def recur(L, R):
+            if not L and not R: return True
+            if not L or not R or L.val != R.val: return False
+            return recur(L.left, R.right) and recur(L.right, R.left)
+
+        return recur(root.left, root.right) if root else True
+
+
+# C
+bool recur(struct TreeNode *L, struct TreeNode *R){
+    if (!L && !R) return true;
+    if (!L || !R || L->val != R->val) return false;
+    return recur(L->left, R->right) && recur(L->right, R->left);
+}
+
+bool isSymmetric(struct TreeNode* root){
+    if (!root) return true;
+    return recur(root->left, root->right);
+}
+
+
+# Python 队列法
+# 参考：https://leetcode-cn.com/problems/dui-cheng-de-er-cha-shu-lcof/solution/cyu-pythonliang-chong-jie-fa-shi-xian-di-gui-yu-di/
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        if not root: return True
+        s = []
+        s.append(root.left)
+        s.append(root.right)
+        while s:
+            a = s.pop(0)
+            b = s.pop(0)
+            if not a and not b: continue
+            if not a or not b or a.val != b.val: return False
+            s.append(a.left)
+            s.append(b.right)
+            s.append(a.right)
+            s.append(b.left)
+        return True
