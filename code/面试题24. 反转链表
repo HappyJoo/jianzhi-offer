@@ -1,0 +1,30 @@
+# python 因为在 while 那里已经考虑了 head == NULL 的边界情况，
+# 所以就不用在开头多判断一次了。直接用一个tmp作为临时变量，
+# 存放第二个指针的下一个变量，然后把第二个指针指向第一个指针，
+# 最后将两个指针都后移一位就可以了。
+
+# 时间复杂度 O(N) 从头到尾走了一遍
+# 空间复杂度 O(1）只用到一个指针
+class Solution:
+    def reverseList(self, head: ListNode) -> ListNode:
+        pre = None
+        while head:
+            tmp = head.next
+            head.next = pre
+            pre = head
+            head = tmp
+        return pre
+
+
+# C
+struct ListNode* reverseList(struct ListNode* head){
+    struct ListNode *pre = NULL, *tmp;
+    while (head)
+    {
+        tmp = head->next;
+        head->next = pre;
+        pre = head;
+        head = tmp;
+    }
+    return pre;
+}
