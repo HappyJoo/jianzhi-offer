@@ -1,7 +1,7 @@
 # Python 递推
 # 参考：https://leetcode-cn.com/problems/dui-cheng-de-er-cha-shu-lcof/solution/mian-shi-ti-28-dui-cheng-de-er-cha-shu-di-gui-qing/
 # 时间复杂度 O(N) 最差是全部遍历一遍，最好是root节点的左右节点就不一样
-# 空间复杂度 O(1）
+# 空间复杂度 O(N) 递推的空间复杂度没有优化的情况下一般是N
 
 class Solution:
     def isSymmetric(self, root: TreeNode) -> bool:
@@ -28,6 +28,8 @@ bool isSymmetric(struct TreeNode* root){
 
 # Python 队列法
 # 参考：https://leetcode-cn.com/problems/dui-cheng-de-er-cha-shu-lcof/solution/cyu-pythonliang-chong-jie-fa-shi-xian-di-gui-yu-di/
+# 时间复杂度 O(N) 最差是全部遍历一遍，最好是root节点的左右节点就不一样
+# 空间复杂度 O(N) 用了个列表把所有元素放了个遍
 class Solution:
     def isSymmetric(self, root: TreeNode) -> bool:
         if not root: return True

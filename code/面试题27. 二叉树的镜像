@@ -1,7 +1,7 @@
 # Python 递推
 # 参考：https://leetcode-cn.com/problems/er-cha-shu-de-jing-xiang-lcof/solution/mian-shi-ti-27-er-cha-shu-de-jing-xiang-di-gui-fu-/
 # 时间复杂度 O(N) 从头到尾走了一遍
-# 空间复杂度 O(1）只用到一个指针
+# 空间复杂度 O(N) 递推的空间复杂度没有优化的情况下一般是N
 class Solution:
     def mirrorTree(self, root: TreeNode) -> TreeNode:
         if not root: return
@@ -24,6 +24,9 @@ struct TreeNode* mirrorTree(struct TreeNode* root){
 
 
 # python 辅助栈
+# 时间复杂度 O(N) 从头到尾走了一遍
+# 空间复杂度 O(N) 用了个列表把所有元素放了个遍
+
 class Solution:
     def mirrorTree(self, root: TreeNode) -> TreeNode:
         if not root: return
