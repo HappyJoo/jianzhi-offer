@@ -1,0 +1,36 @@
+# Python 递推
+# 参考：https://leetcode-cn.com/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/solution/mian-shi-ti-29-shun-shi-zhen-da-yin-ju-zhen-she-di/
+#      https://leetcode-cn.com/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/solution/shan-chu-di-yi-xing-ni-shi-zhen-xuan-zhuan-python5/
+# 时间复杂度 O(N) 遍历一遍
+# 空间复杂度 O(N) res 把所有数又加了进去，所以是 N
+
+# Python 这个 zip 真的是太无敌了，这个方法太帅了！
+# 建议可以把每个 while 都 print 出来帮助理解。
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        res = []
+        while matrix:
+            res += matrix.pop(0)
+            matrix = list(zip(*matrix))[::-1]
+        return res
+
+# 和上一个方法是一样的，不过这个方法就是标准解法，不是哪个语言都能用上面的解法的。
+class Solution:
+    def spiralOrder(self, matrix:[[int]]) -> [int]:
+        if not matrix: return []
+        l, r, t, b, res = 0, len(matrix[0]) - 1, 0, len(matrix) - 1, []
+        while True:
+            for i in range(l, r + 1): res.append(matrix[t][i]) # left to right
+            t += 1
+            if t > b: break
+            for i in range(t, b + 1): res.append(matrix[i][r]) # top to bottom
+            r -= 1
+            if l > r: break
+            for i in range(r, l - 1, -1): res.append(matrix[b][i]) # right to left
+            b -= 1
+            if t > b: break
+            for i in range(b, t - 1, -1): res.append(matrix[i][l]) # bottom to top
+            l += 1
+            if l > r: break
+        return res
+
