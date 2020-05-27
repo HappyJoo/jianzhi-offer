@@ -1,0 +1,65 @@
+# 我的简单题解：https://leetcode-cn.com/problems/bao-han-minhan-shu-de-zhan-lcof/solution/shuang-zhan-fu-zhu-zhan-cyu-yan-python-jie-jue-fan/
+# Python 
+# 用两个栈，A 作为主栈，负责添加新元素和弹出栈顶元素。 B 则作为辅助栈，负责记录最小元素，栈顶就是最小元素。
+# 时间复杂度 O(1) 就如题目， min、push 及 pop 的时间复杂度都是 O(1)。
+# 空间复杂度 O(N）这个我不是很会算，应该是append多少元素，就要用到多少空间吧
+class MinStack:
+
+    def __init__(self):
+        """
+        initialize your data structure here.
+        """
+        self.a, self.b = [], []
+
+    def push(self, x: int) -> None:
+        self.a.append(x)
+        if not self.b or self.b[-1] >= x:
+            self.b.append(x)
+
+    def pop(self) -> None:
+        if self.a.pop() == self.b[-1]:
+            self.b.pop()
+
+    def top(self) -> int:
+        return self.a[-1]
+
+    def min(self) -> int:
+        return self.b[-1]
+
+
+# C 
+typedef struct {
+    int d1[10000],t1, d2[10000], t2;
+} MinStack;
+
+/** initialize your data structure here. */
+
+MinStack* minStackCreate() {
+    MinStack *stack = (MinStack*)malloc(sizeof(MinStack));
+    stack->t1 = -1;
+    stack->t2 = -1;
+    return stack;
+}
+
+void minStackPush(MinStack* obj, int x) {
+    obj->d1[++obj->t1] = x;
+    if (obj->t2 == -1 || obj->d2[obj->t2] >= x)
+        obj->d2[++obj->t2] = x;
+}
+
+void minStackPop(MinStack* obj) {
+    if (obj->d1[obj->t1--] == obj->d2[obj->t2])
+        obj->t2--;
+}
+
+int minStackTop(MinStack* obj) {
+    return obj->d1[obj->t1];
+}
+
+int minStackMin(MinStack* obj) {
+    return obj->d2[obj->t2];
+}
+
+void minStackFree(MinStack* obj) {
+    free(obj);
+}
