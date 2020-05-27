@@ -1,0 +1,45 @@
+# Python 和上一道二叉树是差不多的，只不过是要考虑加入 tmp 的时候是正着加还是倒着加。
+# https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof/solution/mian-shi-ti-32-iii-cong-shang-dao-xia-da-yin-er--3/
+# 时间复杂度 O(N) 遍历全部
+# 空间复杂度 O(N）res要占用所有数的空间
+class Solution:
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
+        if not root: return []
+        res, q = [], collections.deque()
+        q.append(root)
+        while q:
+            tmp = collections.deque()
+            for _ in range(len(q)):
+                n = q.popleft()
+                if n.left: q.append(n.left)
+                if n.right: q.append(n.right)
+                if (len(res) & 1) == 0:
+                    tmp.append(n.val)
+                else:
+                    tmp.appendleft(n.val)
+            res.append(list(tmp))
+        return res
+
+# Python 2 减少判断len（q）的奇偶性，直接第一遍是偶数，第二遍是奇数。代码复制下去就好了。
+class Solution:
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
+        if not root: return []
+        res, q = [], collections.deque()
+        q.append(root)
+        while q:
+            tmp = collections.deque()
+            for _ in range(len(q)):
+                n = q.popleft()
+                tmp.append(n.val)
+                if n.left: q.append(n.left)
+                if n.right: q.append(n.right)
+            res.append(list(tmp))
+            if not q: break
+            tmp = collections.deque()
+            for _ in range(len(q)):
+                n = q.popleft()
+                tmp.appendleft(n.val)
+                if n.left: q.append(n.left)
+                if n.right: q.append(n.right)
+            res.append(list(tmp))
+        return res
