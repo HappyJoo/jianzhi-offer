@@ -1,0 +1,49 @@
+# Python res存放结果，queue 实行广度优先算法，最左边是最优先的
+# https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-lcof/solution/mian-shi-ti-32-i-cong-shang-dao-xia-da-yin-er-ch-4/
+# 时间复杂度 O(N) 遍历全部
+# 空间复杂度 O(N）res要占用所有数的空间
+class Solution:
+    def levelOrder(self, root: TreeNode) -> List[int]:
+        if not root: return []
+        res, queue = [], collections.deque()
+        queue.append(root)
+        while queue:
+            node = queue.popleft()
+            res.append(node.val)
+            if node.left: queue.append(node.left)
+            if node.right: queue.append(node.right)
+        return res
+
+
+# C 不是我写的，评论区找到的，供参考
+int* levelOrder(struct TreeNode* root, int* returnSize){
+    if(root==NULL){
+        *returnSize=0;
+        return root;
+    }
+       
+    struct TreeNode* p=root;
+    int* num=(int*)malloc(1010*sizeof(int));
+    struct TreeNode** q=(struct TreeNode**)malloc(1010*sizeof(struct TreeNode*));
+    int head=0,tail=0,num_length=0;
+
+    q[tail++]=p;
+
+    while(tail-head){
+        p=q[head++];
+
+        num[num_length++]=p->val;
+
+        if(p->left!=NULL)
+             q[tail++]=p->left;
+
+           
+        if(p->right!=NULL) 
+            q[tail++]=p->right;
+        
+    }
+
+    *returnSize=num_length;
+
+    return num;
+}
