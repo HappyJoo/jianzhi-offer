@@ -9,6 +9,20 @@ class Solution:
             if votes == 0: x = num
             votes += 1 if num == x else -1
         return x
+# C
+int majorityElement(int* nums, int numsSize){
+    int v = 0, x;
+    for (int i = 0; i < numsSize; i++)
+    {
+        int a = nums[i];
+        if (v == 0) {
+            x = a;
+        }
+        v = v + (a == x ? 1 : -1);
+
+    }
+    return x;
+}
 
 
 # Python 排序法：先排序，取正中间那个数
@@ -17,6 +31,17 @@ class Solution:
 class Solution:
     def majorityElement(self, nums: List[int]) -> int:
         return sorted(nums)[len(nums)//2]
+# C
+int cmp(void *a, void *b)
+{
+    return *(int*)a - *(int*)b;
+}
+int majorityElement(int* nums, int numsSize){
+    int v = 0, x;
+    qsort(nums, numsSize, sizeof(int), cmp);
+    int m = numsSize / 2;
+    return nums[m];
+}
 
 
 # Python hash 法
