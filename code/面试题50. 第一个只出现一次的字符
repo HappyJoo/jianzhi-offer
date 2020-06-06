@@ -1,0 +1,28 @@
+# Python 有序哈希表
+# 这个方法是遍历有序哈希表，所以跟第二个方法要遍历 s 相比，去重了
+# 如果 s 很长，这个方法会高效很多
+# P.S. Python 3.6 之后的字典默认是有序的
+
+# 时间复杂度 O(2N) 
+# 空间复杂度 O(N) 
+
+class Solution:
+    def firstUniqChar(self, s: str) -> str:
+        dic = collections.OrderedDict()
+        for c in s:
+            dic[c] = not c in dic
+        for k, v in dic.items():
+            if v: return k
+        return ' '
+
+# 哈希表
+# 时间复杂度 O(N) 
+# 空间复杂度 O(N) 
+class Solution:
+    def firstUniqChar(self, s: str) -> str:
+        dic = {}
+        for c in s:
+            dic[c] = not c in dic
+        for c in s:
+            if dic[c]: return c
+        return ' '
