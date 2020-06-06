@@ -1,0 +1,14 @@
+# Python 动态规划
+# 参考：https://leetcode-cn.com/problems/lian-xu-zi-shu-zu-de-zui-da-he-lcof/solution/mian-shi-ti-42-lian-xu-zi-shu-zu-de-zui-da-he-do-2/
+# 时间复杂度 O(N) 遍历数组
+# 空间复杂度 O(1) 在原数组上修改，不需要额外空间
+
+# 个人理解：
+# 不断计算当前位置的累积和sums[i]与前面最小的累积和min的差。
+# 每一个 Sum[i] 都是表示当前位置的最小累计和
+
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        for i in range(1, len(nums)):
+            nums[i] += max(nums[i-1], 0)
+        return max(nums)
