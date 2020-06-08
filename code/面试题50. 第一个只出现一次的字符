@@ -4,7 +4,7 @@
 # P.S. Python 3.6 之后的字典默认是有序的
 
 # 时间复杂度 O(2N) 
-# 空间复杂度 O(N) 
+# 空间复杂度 O(N) HashMap 需存储 N 个字符的键值对，使用 O(N) 大小的额外空间
 
 class Solution:
     def firstUniqChar(self, s: str) -> str:
@@ -26,3 +26,22 @@ class Solution:
         for c in s:
             if dic[c]: return c
         return ' '
+
+
+# C 哈希表。鉴于题目限定了从 a 到 z，所以只给了26，实际可以按照需求变动。
+# 时间复杂度 O(N) 
+# 空间复杂度 O(1) 实际只用了 26 个 int，太小了，所以可以算 0 。 和真正的 HashMap 不一样。
+char firstUniqChar(char* s){
+    int hash[26] = {0};
+    int l = strlen(s);
+    for (int i = 0; i < l; i++)
+    {
+        hash[s[i] - 'a']++;
+    }
+
+    for (int i = 0; i < l; i++)
+    {
+        if (hash[s[i] - 'a'] == 1) return s[i];
+    }
+    return ' ';
+}
