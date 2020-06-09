@@ -1,0 +1,83 @@
+# Python 我唯一想到的最简单的，就是直接遍历一遍，然后数数。但是因为数组是排序的，
+# 所以大于 target 就可以直接退出，看数据集如果合适的话，比全部遍历一遍快很多。
+# 时间复杂度 - O(n) 最差是O(n),最好是O(1)
+# 空间复杂度 - O(1) 一个整型变量而已
+class Solution1:
+    def search(self, nums: List[int], target: int) -> int:
+        d = 0
+        for i in nums:
+            if i == target: d += 1
+            elif i > target: break
+        return d
+
+# Python 大佬的二分法，我看了一个小时才大概理解了。细节有点绕。
+# //leetcode-cn.com/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/solution/mian-shi-ti-53-i-zai-pai-xu-shu-zu-zhong-cha-zha-5/
+# 时间复杂度 - O(logn) 
+# 空间复杂度 - O(1) 
+class Solution2:
+    def search(self, nums: [int], target: int) -> int:
+        # 搜索右边界 right
+        i, j = 0, len(nums) - 1
+        while i <= j:
+            m = (i + j) // 2
+            if nums[m] <= target: i = m + 1
+            else: j = m - 1
+        right = i
+        # 若数组中无 target ，则提前返回
+        if j >= 0 and nums[j] != target: return 0
+        # 搜索左边界 left
+        i = 0
+        while i <= j:
+            m = (i + j) // 2
+            if nums[m] < target: i = m + 1
+            else: j = m - 1
+        left = j
+        return right - left - 1
+
+# Python 大佬的二分法，不过用了个函数把重复的代码精简了。
+# //leetcode-cn.com/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/solution/mian-shi-ti-53-i-zai-pai-xu-shu-zu-zhong-cha-zha-5/
+# 时间复杂度 - O(logn) 
+# 空间复杂度 - O(1) 
+class Solution3:
+    def search(self, nums: [int], target: int) -> int:
+        def helper(tar):
+            i, j = 0, len(nums) - 1
+            while i <= j:
+                m = (i + j) // 2
+                if nums[m] <= tar: i = m + 1
+                else: j = m - 1
+            return i
+        return helper(target) - helper(target - 1)
+
+
+# Python 看其他答案的，用了Counter，不知道为什么挺慢的，可能是遍历了全部吧。
+class Solution4:
+    def search(self, nums: List[int], target: int) -> int:
+        c = collections.Counter(nums)
+        return c[target]
+
+# Python 这个就很骚了，直接利用数组的 count 函数，不过也挺慢的。
+class Solution5:
+    def search(self, nums: List[int], target: int) -> int:
+        return nums.count(target)
+
+
+# C 语言的二分法，做了好久，好多细节，累死我了！
+# 二分找到target，然后前后遍历数数。
+# 时间复杂度 - O(Nlogn) logn 找到 target，N 遍历target 
+# 空间复杂度 - O(1) 
+
+int search(int* nums, int numsSize, int target){
+    int i = 0, j = numsSize - 1, cnt = 0;
+    while (i <= j){
+        int m = (i + j) >> 1;
+        if (nums[m] == target)
+        {
+            for (int x = m; x >= 0 && nums[x] == target; x--) cnt++;
+            for (int y = m + 1; y < numsSize && nums[y] == target; y++) cnt++;
+            break;
+        } else if (nums[m] < target) i = m + 1;
+        else j = m - 1;
+    }
+    return cnt;
+}
