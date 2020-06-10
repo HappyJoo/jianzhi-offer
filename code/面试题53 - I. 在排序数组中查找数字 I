@@ -4,11 +4,11 @@
 # 空间复杂度 - O(1) 一个整型变量而已
 class Solution1:
     def search(self, nums: List[int], target: int) -> int:
-        d = 0
+        cnt = 0
         for i in nums:
-            if i == target: d += 1
+            if i == target: cnt += 1
             elif i > target: break
-        return d
+        return cnt
 
 # Python 大佬的二分法，我看了一个小时才大概理解了。细节有点绕。
 # //leetcode-cn.com/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/solution/mian-shi-ti-53-i-zai-pai-xu-shu-zu-zhong-cha-zha-5/
