@@ -1,0 +1,41 @@
+# Python 直接遍历
+# 参考：https://leetcode-cn.com/problems/que-shi-de-shu-zi-lcof/solution/mian-shi-ti-53-ii-0n-1zhong-que-shi-de-shu-zi-er-f/
+# 时间复杂度 - O(n) 最差是O(n),最好是O(1)
+# 空间复杂度 - O(1) 
+class Solution1:
+    def missingNumber(self, nums: List[int]) -> int:
+        for i in range(len(nums)):
+            if i != nums[i]: return i
+        return len(nums)
+
+# 用同样大小的等差数列的和，减去当前数列的和，所得差就是缺少的数字。
+class Solution2:
+    def missingNumber(self, nums: List[int]) -> int:
+        l = len(nums)
+        maxsum = l * (l + 1) // 2
+        numssum = sum(nums)
+        return maxsum - numssum
+
+# 二分法
+# Krahets 说的一句：排序数组中的搜索问题，首先想到 二分法 解决。
+class Solution3:
+    def missingNumber(self, nums: List[int]) -> int:
+        l, r = 0, len(nums) - 1
+        while l <= r:
+            m = (l + r) // 2
+            if nums[m] == m: l = m + 1
+            else: r = m - 1
+        # 如果没有，那就返回 l，此时 l 在 0 的位置上，所以返回 0
+        return l
+
+# C 二分法
+int missingNumber(int* nums, int numsSize){
+    int left = 0, right = numsSize - 1, mid;
+    while (left <= right)
+    {
+        mid = (left + right) >> 1;
+        if (nums[mid] == mid) left = mid + 1;
+        else right = mid - 1;
+    }
+    return left;
+}
