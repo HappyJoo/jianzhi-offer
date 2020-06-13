@@ -1,0 +1,36 @@
+# Python 递归
+# 参考：https://leetcode-cn.com/problems/er-cha-shu-de-shen-du-lcof/solution/mian-shi-ti-55-i-er-cha-shu-de-shen-du-xian-xu-bia/
+# 时间复杂度 - O(n) 最差是链表，退化为O(n)，最好是O(1)
+# 空间复杂度 - O(n) 退化为链表时，要用 O(n) 的栈空间
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        if not root: return 0
+        return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1
+
+# Python 层遍历
+# 时间复杂度 - O(n) 要遍历整个二叉树
+# 空间复杂度 - O(n) 
+
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        if not root: return 0
+        queue, res = [root], 0
+        while queue:
+            tmp = []
+            for node in queue:
+                if node.left: tmp.append(node.left)
+                if node.right: tmp.append(node.right)
+            queue = tmp
+            res += 1
+        return res
+
+
+# C语言 递归 三元表达式
+# 时间复杂度 - O(n) 最差是链表，退化为O(n)，最好是O(1)
+# 空间复杂度 - O(n) 退化为链表时，要用 O(n) 的栈空间
+int maxDepth(struct TreeNode* root){
+    if (!root) return 0;
+    int left = maxDepth(root->left);
+    int right = maxDepth(root->right);
+    return left > right ? left + 1 : right + 1;
+}
