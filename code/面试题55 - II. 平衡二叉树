@@ -1,0 +1,28 @@
+# Python 后序遍历 + 剪枝
+# 参考： https://leetcode-cn.com/problems/ping-heng-er-cha-shu-lcof/solution/mian-shi-ti-55-ii-ping-heng-er-cha-shu-cong-di-zhi/
+# 从最底层开始，把每个节点的数值想象成层数数值，最底层是1。如果左右节点的差值大于1
+# 直接返回 -1。如果上一层得到的返回值是 -1，它也返回 -1。最后的返回值就是 -1。 
+# 这就是剪枝了。一直返回 -1 即可，不需要计算其他的了。
+class Solution:
+    def isBalanced(self, root: TreeNode) -> bool:
+        def recur(root):
+            if not root: return 0
+            left = recur(root.left)
+            if left == -1: return -1
+            right = recur(root.right)
+            if right == -1: return -1
+            return max(left, right) + 1 if abs(left - right) <= 1 else -1
+
+        return recur(root) != -1
+
+
+# Python 先序遍历 + 判断深度（从顶到底）
+class Solution:
+    def isBalanced(self, root: TreeNode) -> bool:
+        if not root: return True
+        return abs(self.depth(root.left) - self.depth(root.right)) <= 1 and \
+            self.isBalanced(root.left) and self.isBalanced(root.right)
+
+    def depth(self, root):
+        if not root: return 0
+        return max(self.depth(root.left), self.depth(root.right)) + 1
