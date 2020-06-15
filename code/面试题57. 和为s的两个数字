@@ -1,0 +1,40 @@
+# Python 双指针法，前后向中间包夹。
+# 一开始我想的是二分法，应该是可以的，但反正是复杂很多。
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        l, r = 0, len(nums) - 1
+        while l < r:
+            sum = nums[l] + nums[r]
+            if sum == target: 
+                return nums[l], nums[r]
+            elif sum > target:
+                r -= 1
+            else:
+                l += 1
+        return []
+
+
+# C 双指针
+# 不知道为什么，malloc 那一句一定要写在前面，return 要写在 while 外面，不然就报错。
+# 这一题虽然题目没明确说明，但是每一个例子应该是一定会有一对符合 target 的数字。
+# 所以一定可以返回 2 个数，就不需要考虑边界情况了。但是面试的时候一定要问清楚。
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* twoSum(int* nums, int numsSize, int target, int* returnSize){
+    int l = 0, r = numsSize - 1;
+    int *res = malloc(2 * sizeof(int));
+    while (l < r)
+    {
+        int sum = nums[l] + nums[r];
+        if (sum < target) l++;
+        else if (sum > target) r--;
+        else{
+            *returnSize = 2;
+            res[0] = nums[l];
+            res[1] = nums[r];
+            break;
+        }
+    }
+    return res;
+}
