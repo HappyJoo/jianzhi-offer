@@ -1,0 +1,65 @@
+# 参考：https://leetcode-cn.com/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof/solution/mian-shi-ti-58-ii-zuo-xuan-zhuan-zi-fu-chuan-qie-p/
+# Python 切片 Python 特性太好用了
+# time: 44 ms, memory: 13.5 MB
+class Solution1:
+    def reverseLeftWords(self, s: str, n: int) -> str:
+        return s[n:] + s[:n]
+
+
+# Python 列表
+# time: 56 ms, memory: 13.5 MB
+class Solution2:
+    def reverseLeftWords(self, s: str, n: int) -> str:
+        res = []
+        for i in range(n, len(s)):
+            res.append(s[i])
+        for i in range(n):
+            res.append(s[i])
+        return ''.join(res)
+
+
+# Python 列表 取余
+# time: 56 ms, memory: 13.8 MB
+class Solution:
+    def reverseLeftWords(self, s: str, n: int) -> str:
+        res = []
+        for i in range(n, n + len(s)):
+            res.append(s[i % len(s)])
+        return ''.join(res)
+        
+
+# Python 字符串
+# time: 56 ms, memory: 13.7 MB
+class Solution:
+    def reverseLeftWords(self, s: str, n: int) -> str:
+        res = ""
+        for i in range(n, len(s)):
+            res += s[i]
+        for i in range(n):
+            res += s[i]
+        return res
+
+
+# Python 字符串 取余
+# time: 64 ms, memory: 13.8 MB
+class Solution5:
+    def reverseLeftWords(self, s: str, n: int) -> str:
+        res = ""
+        for i in range(n, n + len(s)):
+            res += s[i % len(s)]
+        return res
+
+
+# C 也是用的字符串法。最后要补上 '\0' 才行，当然分配的时候就要 +1 了。
+# time: 0 ms, memory: 5.8 MB
+char* reverseLeftWords(char* s, int n){
+    int l = strlen(s);
+    int cnt = 0;
+    char *res = malloc((l + 1) * sizeof(char));
+    for (int i = n; i < n + l; i++)
+    {
+        res[cnt++] = s[i % l];
+    }
+    res[cnt] = '\0';
+    return res;
+}
