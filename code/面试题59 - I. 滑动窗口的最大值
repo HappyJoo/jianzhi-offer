@@ -1,0 +1,35 @@
+# Python
+# 滑动窗口，这个有点不好记，我建议记下面那个方法。
+# 时间复杂度 - O(n) 
+# 空间复杂度 - O(k)
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        deque = collections.deque()
+        res, n = [], len(nums)
+        for i, j in zip(range(1 - k, n + 1 - k), range(n)):
+            if i > 0 and deque[0] == nums[i - 1]: deque.popleft() # 删除 deque 中对应的 nums[i-1]
+            while deque and deque[-1] < nums[j]: deque.pop() # 保持 deque 递减
+            deque.append(nums[j])
+            if i >= 0: res.append(deque[0]) # 记录窗口最大值
+        return res
+
+
+# Python
+# 时间复杂度 - O(n) 
+# 空间复杂度 - O(k)
+# 滑动窗口，分成两个部分，第一部分先把 k 以内的元素放进窗口，第二部分开始滑动。
+# 采用双端队列，第 0 位是窗口最大值，若 nums[i] 比队列所有值都大，则全部弹出
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        if not nums or k == 0: return []
+        deque = collections.deque()
+        for i in range(k): # 未形成窗口
+            while deque and deque[-1] < nums[i]: deque.pop()
+            deque.append(nums[i])
+        res = [deque[0]]
+        for i in range(k, len(nums)): # 形成窗口后
+            if deque[0] == nums[i - k]: deque.popleft() # 防止前后相同，中间比它们小的情况
+            while deque and deque[-1] < nums[i]: deque.pop()
+            deque.append(nums[i])
+            res.append(deque[0])
+        return res
