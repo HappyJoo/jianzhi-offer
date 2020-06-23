@@ -63,3 +63,15 @@ char* reverseLeftWords(char* s, int n){
     res[cnt] = '\0';
     return res;
 }
+
+# Go 字符串法
+func reverseLeftWords(s string, n int) string {
+    var str string
+    for i:=n; i<len(s); i++ {
+        str += string(s[i])
+    }
+    for i:=0; i<n; i++ {
+        str += string(s[i])
+    }
+    return str
+}
