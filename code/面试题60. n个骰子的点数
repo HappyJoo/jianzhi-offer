@@ -1,0 +1,80 @@
+# 参考：https://leetcode-cn.com/problems/nge-tou-zi-de-dian-shu-lcof/solution/nge-tou-zi-de-dian-shu-dong-tai-gui-hua-ji-qi-yo-3/
+# 动态规划我还没掌握好，难度不小。
+# Python
+class Solution:
+    def twoSum(self, n: int) -> List[float]:
+        dp = [0 for _ in range(6*n+1)]#索引0不取，后面取到最大索引6*n
+
+        for i in range(1,7):#初始化do，第一轮的抛掷
+            dp[i]=1
+        for i in range(2,n+1):#从第二轮抛掷开始算
+            for j in range(6*n,i-1,-1):#第二轮抛掷最小和为2，从大到小更新对应               ##的抛掷次数
+                dp[j]=0#每次投掷要从0更新dp[j]大小，点数和出现的次数要重新计算
+                for cur in range(1,7):#每次抛掷的点数
+                    if j -cur < i - 1:break#意思为上一轮的最小点数为i-1
+                    dp[j]+=dp[j-cur]#根据上一轮来更新当前轮数据
+        sum_ = 6**n#一共抛掷了6**n次
+        res = []
+        for i in range(n,6*n+1):
+            res.append(dp[i]*1.0/sum_)#最终计算结果
+        return res 
+
+
+# C++ 参考
+class Solution {
+public:
+    vector<double> twoSum(int n) {
+        int dp[15][70];
+        memset(dp, 0, sizeof(dp));
+        for (int i = 1; i <= 6; i ++) {
+            dp[1][i] = 1;
+        }
+        for (int i = 2; i <= n; i ++) {
+            for (int j = i; j <= 6*i; j ++) {
+                for (int cur = 1; cur <= 6; cur ++) {
+                    if (j - cur <= 0) {
+                        break;
+                    }
+                    dp[i][j] += dp[i-1][j-cur];
+                }
+            }
+        }
+        int all = pow(6, n);
+        vector<double> ret;
+        for (int i = n; i <= 6 * n; i ++) {
+            ret.push_back(dp[n][i] * 1.0 / all);
+        }
+        return ret;
+    }
+}; 
+class Solution {
+public:
+    vector<double> twoSum(int n) {
+
+        // 初始化边界
+        int dp[70];
+        memset(dp, 0, sizeof(dp));
+        for (int i = 1; i <= 6; i ++) {
+            dp[i] = 1;
+        }
+
+
+        for (int i = 2; i <= n; i ++) {
+            for (int j = 6*i; j >= i; j --) {
+                dp[j] = 0;
+                for (int cur = 1; cur <= 6; cur ++) {
+                    if (j - cur < i-1) {
+                        break;
+                    }
+                    dp[j] += dp[j-cur];
+                }
+            }
+        }
+        int all = pow(6, n);
+        vector<double> ret;
+        for (int i = n; i <= 6 * n; i ++) {
+            ret.push_back(dp[i] * 1.0 / all);
+        }
+        return ret;
+    }
+};
