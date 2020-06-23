@@ -19,7 +19,6 @@ class Solution:
             res.append(dp[i]*1.0/sum_)#最终计算结果
         return res 
 
-
 # C++ 参考
 class Solution {
 public:
@@ -78,3 +77,18 @@ public:
         return ret;
     }
 };
+
+
+# Python 暴力法 我觉得能看懂暴力法，就能知道题目的答案是什么了。然后再去看动态规划
+class Solution:
+    def twoSum(self, n: int) -> List[float]:
+        # 暴力解法
+        res = [1/6] * 6
+
+        for i in range(1,n):
+            tmp = [0] * (5*i+6)
+            for j in range(len(res)):
+                for k in range(6):
+                    tmp[j+k] += res[j] * 1/6
+            res = tmp
+        return res
