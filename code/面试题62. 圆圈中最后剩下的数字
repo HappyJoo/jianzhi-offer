@@ -1,0 +1,48 @@
+# Python 应该是数学解法
+# 最终一个人时位置为 0，反推到 n 个人。
+# 因此我们可以推出递推公式f(8, 3) = [f(7, 3) + 3] % 8
+# 进行推广泛化，即f(n, m) = [f(n - 1, m) + m] % n
+# 参考（简化版）：https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/solution/c-dao-tui-fa-mian-shi-ti-62-yuan-quan-zhong-zui-ho/
+# 参考（解释版）：https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/solution/huan-ge-jiao-du-ju-li-jie-jue-yue-se-fu-huan-by-as/
+# 时间复杂度 - O(n) 
+# 空间复杂度 - O(1)
+class Solution:
+    def lastRemaining(self, n: int, m: int) -> int:
+        res = 0
+        for i in range(2, n + 1):
+            res = (res + m) % i
+        return res
+
+# 思考：如何保证公平？
+# 每轮的 m 可以通过随机的方法取出。
+
+# Python
+# 上面方法的递归写法
+sys.setrecursionlimit(100000) #默认递归深度不够，设置大一点
+class Solution:
+    def lastRemaining(self, n: int, m: int) -> int:
+        def f(n, m):
+            if n == 0: return 0
+            x = f(n - 1, m)
+            return (x + m) % n
+        return f(n, m)
+
+
+# Golang
+func lastRemaining(n int, m int) int {
+    res := 0
+    for i := 2; i <= n; i++ {
+        res = (res + m) % i
+    }
+    return res
+}
+
+
+# C
+int lastRemaining(int n, int m){
+    int res = 0;
+    for (int i = 2; i <= n; i++) {
+        res = (res + m) % i;
+    }
+    return res;
+}
