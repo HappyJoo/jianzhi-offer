@@ -1,7 +1,6 @@
-# C
+# C 双循环遍历
 # 时间复杂度 - O(n)，最差是O(n),最好是O(1)
 # 空间复杂度 - O(1)
-
 bool findNumberIn2DArray(int** matrix, int matrixSize, int* matrixColSize, int target){
     for(int i = 0; i < matrixSize; i++)
     {
@@ -15,16 +14,15 @@ bool findNumberIn2DArray(int** matrix, int matrixSize, int* matrixColSize, int t
     return false;
 }
 
-# python 这个和上面一样的思路，理论上会快一点点
+# python 这个和上面一样的思路，理论上会快一点点，也是遍历
 class Solution:
     def findNumberIn2DArray(self, matrix: List[List[int]], target: int) -> bool:
         if not matrix: return False
         for i in matrix:
             for j in i:
-                if j == target:
-                    return True
-                elif j > target:
-                    break
+                if j < target: continue # put < first, then >, finally ==. To reduce comparison.
+                elif j > target: break
+                else: return True
         return False
 
 # python 这个比较短，但是很慢，因为遍历了全部n
@@ -34,3 +32,61 @@ class Solution:
         for i in matrix:
             if target in i: return True
         return False
+
+
+# Python 双指针标志数法，从左下角开始向右上角缩进。最优解。
+class Solution:
+    def findNumberIn2DArray(self, matrix: List[List[int]], target: int) -> bool:
+        i, j = len(matrix) - 1, 0
+        while i >= 0 and j < len(matrix[0]):
+            if matrix[i][j] > target: i -= 1
+            elif matrix[i][j] < target: j += 1
+            else: return True
+        return False
+
+
+# Go 双循环法
+func findNumberIn2DArray(matrix [][]int, target int) bool {
+    if len(matrix) == 0 || len(matrix[0]) == 0 {
+        return false
+    } 
+    for i := 0; i < len(matrix); i++ {
+        for j := 0; j < len(matrix[i]); j++ {
+            if matrix[i][j] < target {
+                continue
+            } else if matrix[i][j] > target {
+                break
+            } else {
+                return true
+            }
+        }
+    }
+    return false
+}
+
+# GO 标志数法
+func findNumberIn2DArray(matrix [][]int, target int) bool {
+    i := len(matrix) - 1
+    j := 0
+    for i >= 0 && j < len(matrix[0]) {
+        if matrix[i][j] > target {
+            i--
+        } else if matrix[i][j] < target {
+            j++
+        } else {
+            return true
+        }
+    }
+    return false
+}
+
+# GO sort 包 SearchInts
+func findNumberIn2DArray(matrix [][]int, target int) bool {
+    for _,nums:=range matrix{
+        i:=sort.SearchInts(nums,target)
+        if i<len(nums)&&target==nums[i]{
+            return true
+        }
+    }
+    return false
+}
