@@ -1,36 +1,22 @@
-# Python 迭代法
+# Python 递归
 # 参考：https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof/solution/mian-shi-ti-68-i-er-cha-sou-suo-shu-de-zui-jin-g-7/
-# 时间复杂度 - O(N) 
-# 空间复杂度 - O(1)
-class Solution:
-    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        while root:
-            if root.val < p.val and root.val < q.val: # p,q 都在 root 的右子树中
-                root = root.right # 遍历至右子节点
-            elif root.val > p.val and root.val > q.val: # p,q 都在 root 的左子树中
-                root = root.left # 遍历至左子节点
-            else: break
-        return root
-
-class Solution:
-    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        if p.val > q.val: p, q = q, p # 保证 p.val < q.val
-        while root:
-            if root.val < p.val: # p,q 都在 root 的右子树中
-                root = root.right # 遍历至右子节点
-            elif root.val > q.val: # p,q 都在 root 的左子树中
-                root = root.left # 遍历至左子节点
-            else: break
-        return root
-
-
-# Python 递归法
 # 时间复杂度 - O(N) 
 # 空间复杂度 - O(N)
 class Solution:
-    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        if root.val < p.val and root.val < q.val:
-            return self.lowestCommonAncestor(root.right, p, q)
-        if root.val > p.val and root.val > q.val:
-            return self.lowestCommonAncestor(root.left, p, q)
+    def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+        if not root or root == p or root == q: return root
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
+        if not left: return right
+        if not right: return left
         return root
+
+class Solution:
+    def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+        if not root or root == p or root == q: return root
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
+        if not left and not right: return # 1.
+        if not left: return right # 3.
+        if not right: return left # 4.
+        return root # 2. if left and right:
