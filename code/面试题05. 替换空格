@@ -5,6 +5,18 @@ class Solution:
     def replaceSpace(self, s: str) -> str:
         return s.replace(' ', '%20')
 
+# Python 数组解法
+class Solution:
+    def replaceSpace(self, s: str) -> str:
+        res = []
+        for i in s:
+            if i == ' ':
+                res.append("%20")
+            else:
+                res.append(i)
+        return ''.join(res)
+        
+
 
 # C 上面一句，下面这么多句，还容易写错，快哭了
 char* replaceSpace(char* s){
@@ -23,6 +35,20 @@ char* replaceSpace(char* s){
     }
     res[j] = '\0';
     return res;
+}
+
+
+# Go
+func replaceSpace(s string) string {
+    res := ""
+    for _, v := range s {
+        if v == ' ' {
+            res += "%20"
+        } else {
+            res += string(v)
+        }
+    }
+    return res
 }
 
 
