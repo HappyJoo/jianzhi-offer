@@ -1,6 +1,6 @@
-# python
-# 时间复杂度 - O(n) 从头到尾遍历一次，替换掉空格
-# 空间复杂度 - O(1) 没有额外的空间
+# python 题目要求用数组返回答案
+# 时间复杂度 - O(N) 从头到尾遍历一次
+# 空间复杂度 - O(N) 递归需要 O(N)的空间
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, x):
