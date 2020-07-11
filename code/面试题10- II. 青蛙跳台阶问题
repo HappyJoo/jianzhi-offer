@@ -1,12 +1,29 @@
 # 1
 # python
+# 时间复杂度 O(N) 循环 n 次
+# 空间复杂度 O(1) 
 class Solution:
     def numWays(self, n: int) -> int:
         a, b = 1, 1
         for _ in range(n):
-            a, b = b, (a+b)%1000000007
-        return a
+            a, b = b, a + b
+        return a % 1000000007
 
+
+# Python 使用 lru_cache 保存重复计算的缓存值
+class Solution:
+    @functools.lru_cache
+    def numWays(self, n: int) -> int:
+        return 1 if n <= 1 else (self.numWays(n-1) + self.numWays(n-2))%1000000007
+
+# Python 利用字典进行尾递归
+d = {}
+class Solution:
+    def numWays(self, n: int) -> int:
+        if n <= 1: return 1
+        if n in d: return d[n]
+        d[n] = self.numWays(n - 1) + self.numWays(n - 2)
+        return d[n] % 1000000007
 
 # 2
 // C
@@ -19,4 +36,16 @@ int numWays(int n){
         b = c;
     }
     return a;
+}
+
+# Go
+func numWays(n int) int {
+    a := 1
+    b := 1
+    for i := 0; i < n; i++ {
+        t := a
+        a = b
+        b = (t + b) % 1000000007
+    }
+    return a 
 }
