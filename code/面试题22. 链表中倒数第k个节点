@@ -29,3 +29,24 @@ struct ListNode* getKthFromEnd(struct ListNode* head, int k){
     }
     return head;
 }
+
+# Go 双指针
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func getKthFromEnd(head *ListNode, k int) *ListNode {
+    fast := head
+    for k > 0 {
+        k--
+        fast = fast.Next
+    }
+    for fast != nil {
+        fast = fast.Next
+        head = head.Next
+    }
+    return head
+}
