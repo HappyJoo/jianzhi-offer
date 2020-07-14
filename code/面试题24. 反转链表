@@ -29,3 +29,23 @@ struct ListNode* reverseList(struct ListNode* head){
     return pre;
 }
 
+
+# GO
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func reverseList(head *ListNode) *ListNode {
+    var pre *ListNode # 先声明，才能赋值 nil
+    pre = nil
+    for head != nil {
+        tmp := head.Next
+        head.Next = pre
+        pre = head
+        head = tmp
+    }
+    return pre
+}
