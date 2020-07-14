@@ -47,3 +47,34 @@ struct ListNode* mergeTwoLists(struct ListNode* l1, struct ListNode* l2){
     cur->next = l1 ? l1 : l2;
     return pre;
 }
+
+# Go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
+    res := &ListNode{} // 前面是地址符号
+    head := res
+    for l1 != nil && l2 != nil {
+        if l1.Val > l2.Val {
+            res.Next = l2
+            res = res.Next
+            l2 = l2.Next
+        } else {
+            res.Next = l1
+            res = res.Next
+            l1 = l1.Next
+        }
+    }
+
+    if l1 != nil {
+        res.Next = l1
+    } else {
+        res.Next = l2
+    }
+    return head.Next // 如果直接return head，就会得到[0,1,1,2,3,4,4],多个0
+}
